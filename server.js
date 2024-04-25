@@ -1,22 +1,30 @@
 const express = require('express');
 const app = express();
+const db = require('./dbConnection')
 
-app.use(express.static('public'))
-//app.set('view engine', 'ejs')
-app.use(express.static(__dirname + '/public'));
+//app.use(express.static('public'))
+app.set('view engine', 'ejs')
+app.use('/login', express.static(__dirname + '/public'));
 app.use(express.urlencoded({ extended: false }))
+app.use(express.json())
 
-app.post('/', (req, res) => {
-    const username = req.body.inputUsername
-    const password = req.body.înputPassword
-    console.log(username)
-    res.redirect('/')
+app.post('/login', (req, res) => {
+    const userObj = req.body.userObj
+    console.log(userObj)
+    res.redirect('/login')
 })
 
-app.get('/', (req, res) => {
-    
-    res.render('index')
+app.get('/userDashboard', async (req, res) => {
+    console.log('USERDASHBOARD')
+    try {
+        const result = await db.query('SELECT * FROM users');
+        console.log(result)
+        console.log('Connection zur DB läuft')
+        res.render('userDashboard')
+    } catch (error) {
+        res.send('Fehler in der Datenbank Connection ' + error)
+    }
 })
 
-app.set(express.static('index'))
+//app.set(express.static('index'))
 app.listen(3000)

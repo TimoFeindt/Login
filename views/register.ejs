@@ -4,22 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <title>Document</title>
-    <script src="./script/main.js" defer></script>
 </head>
-
 <body>
-    <h1>Login</h1>
+    <h1>register</h1>
 
-    <div>
+    <form action="/register" mothod="post">
         <label for="userNameInput">Username</label>
         <input type="text" name="userNameInput" data-username value="">
         <label for="passwordInput">Password</label>
-        <input type="text" name="passwordInput" data-password value="">
-        <label for="emailInput">Email</label>
-        <input type="text" name="emailInput" data-email value="">
-        <button type="submit" data-login >Login</button>
-    </div>
-
-    <a href="/register">Register</a>
+        <input type="text" name="passwordInput" data-username value="">
+        <button type="submit" >Login</button>
+    </form>
 </body>
 </html
