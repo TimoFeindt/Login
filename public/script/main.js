@@ -35,7 +35,7 @@ loginButton.addEventListener('click', async () => {
         });
         console.log(response.body)
         if (response.ok) {
-            // DAten Übermittlung erfolgreich, Aktualisierung der Anzeige oder Weiterleitung
+            // Daten Übermittlung erfolgreich, Aktualisierung der Anzeige oder Weiterleitung
         } else {
             console.error('Fehler beim Weiterleiten des Usernamen');
         }

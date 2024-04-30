@@ -6,8 +6,18 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>UserDashboard</h1>
-
     
+
+    <% const users =  locals.users %>
+    <% users.forEach(user => { %>
+        <% const userNameArray = Array.from(user.username) %>
+        <% const arrayFirstLetter = userNameArray[0].toUpperCase() %>
+        <% const arrayFirstLetterMissing = userNameArray.slice(1) %>
+        <% arrayFirstLetterMissing.unshift(arrayFirstLetter) %>
+        <% const newFinalUserName = arrayFirstLetterMissing.join('') %>
+        
+        <h1>Hi <%= newFinalUserName %> this is your dashboard</h1>
+    <% }); %>
+   
 </body>
 </html

@@ -15,16 +15,27 @@ app.post('/login', (req, res) => {
 })
 
 app.get('/userDashboard', async (req, res) => {
-    console.log('USERDASHBOARD')
+    let result = '';
     try {
-        const result = await db.query('SELECT * FROM users');
-        console.log(result)
+        result = await db.query('SELECT * FROM users');
+        const users = result.rows 
         console.log('Connection zur DB läuft')
-        res.render('userDashboard')
+        res.render('userDashboard', { users })
     } catch (error) {
         res.send('Fehler in der Datenbank Connection ' + error)
     }
 })
+
+// Kannich die als Middleware benutzen? -Erster Gedanke war ja jedoch ist mein zweiter Gedanke nein, da ich die Funktion erst ausführen kann nachdem ich eine Abfrage geleistet habe. 
+const capitalizeFirstLetter = (word) => {
+    const firstArray = Array.from(word);
+    const arrayFirstLetter = firstArray[0].toUpperCase();
+    const arrayWithoutFirstLetter = firstArray.slice(1);
+    const arrayWithCapitalizedFirstLetter = arrayWithoutFirstLetter.unshift(arrayFirstLetter);
+    const joinArray = arrayWithoutFirstLetter.join('')
+
+    return joinArray
+}
 
 //app.set(express.static('index'))
 app.listen(3000)
