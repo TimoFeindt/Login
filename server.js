@@ -2,9 +2,9 @@ const express = require('express');
 const app = express();
 const db = require('./dbConnection')
 
-//app.use(express.static('public'))
+
 app.set('view engine', 'ejs')
-app.use('/login', express.static(__dirname + '/public'));
+app.use('/login', express.static(__dirname + '/public')); 
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
@@ -24,6 +24,14 @@ app.get('/userDashboard', async (req, res) => {
     } catch (error) {
         res.send('Fehler in der Datenbank Connection ' + error)
     }
+})
+
+app.get('/data', (req, res) => {
+    res.json( {message: 'Hello World'} );
+})
+
+app.get('/register', (req,res)=> {
+    res.sendFile(__dirname + '/public/register.html')
 })
 
 // Kannich die als Middleware benutzen? -Erster Gedanke war ja jedoch ist mein zweiter Gedanke nein, da ich die Funktion erst ausführen kann nachdem ich eine Abfrage geleistet habe. 
