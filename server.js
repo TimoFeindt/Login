@@ -30,7 +30,7 @@ app.get('/data', (req, res) => {
     res.json( {message: 'Hello World'} );
 })
 
-app.get('/register', (req,res)=> {
+ app.get('/register', (req,res)=> {
     res.sendFile(__dirname + '/public/register.html')
 })
 
