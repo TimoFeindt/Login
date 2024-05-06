@@ -10,7 +10,7 @@
 
     <div>
         <label for="userNameRegisterInput">Username</label>
-        <input type="text" name="userNameRegisterInput" data-register-username value="">
+        <input type="text" name="userNameRegisterInput" data-register-username value="username">
         <label for="passwordRegisterInput">Password</label>
         <input type="text" name="passwordRegisterInput" data-register-password value="">
         <label for="emailInput">Email</label>
@@ -19,20 +19,64 @@
     </div>
 
     <script>
-        fetch('/data')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Fehler beim Abrufen der Daten');
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Datenverarbeitung
-            console.log(data.message);
-        })
-        .catch(error => {
-            console.error('Fehler:', error);
-        });
+
+    const newUserName = document.querySelector('[data-register-username]');
+    const newUserPassword = document.querySelector('[data-register-password]');
+    const newUserEmail = document.querySelector('[data-register-email]');
+    const registerButton = document.querySelector('[data-register-button]') 
+
+
+    registerButton.addEventListener('click', () => {
+        const newUser = {
+            username: newUserName.value,
+            email: newUserEmail.value,
+            password: newUserPassword.value,
+        }
+        submitNewUserData(newUser)
+        //console.log(newUser)
+    })
+
+    const submitNewUserData = async (newUser) => {
+        console.log(newUser)
+        /* fetch(`/register`, {
+                method: 'POST',
+                body: JSON.stringify({ newUser }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Fehler beim Senden der Daten');
+                }
+                //return response.json();
+                console.log(data)
+            })
+            .then(data => {
+                console.log('Antwort vom Server:', data);
+            })
+            .catch(error => {
+                console.error('Fehler:', error);
+            }); */
+
+        try {
+            const response = await fetch(`/register`, {
+                method: 'POST',
+                body: JSON.stringify(newUser),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            console.log(response)
+        if (response.ok) {
+            // Daten Übermittlung erfolgreich, Aktualisierung der Anzeige oder Weiterleitung
+        } else {
+            console.error('Fehler beim Weiterleiten des Usernamen');
+        }
+        } catch (error) {
+            console.error('Fehler beim Weiterleiten des Usernamen', error);
+        }
+    }
     </script>
 </body>
 </html

@@ -34,6 +34,11 @@ app.get('/data', (req, res) => {
     res.sendFile(__dirname + '/public/register.html')
 })
 
+app.post('/register', (req,res) => {
+    console.log('test')
+   // console.log(newUser)
+})
+
 // Kannich die als Middleware benutzen? -Erster Gedanke war ja jedoch ist mein zweiter Gedanke nein, da ich die Funktion erst ausführen kann nachdem ich eine Abfrage geleistet habe. 
 const capitalizeFirstLetter = (word) => {
     const firstArray = Array.from(word);
