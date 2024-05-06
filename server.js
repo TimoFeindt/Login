@@ -30,13 +30,26 @@ app.get('/data', (req, res) => {
     res.json( {message: 'Hello World'} );
 })
 
- app.get('/register', (req,res)=> {
+app.get('/register', (req,res)=> {
     res.sendFile(__dirname + '/public/register.html')
 })
 
-app.post('/register', (req,res) => {
-    console.log('test')
-   // console.log(newUser)
+app.post('/register', async (req,res) => {
+    const userName = req.body.newUser.username;
+    const userEmail = req.body.newUser.email;
+    const userPassword = req.body.newUser.password;
+    console.log(userName)
+    console.log(userEmail)
+    console.log(userPassword)
+    console.log(`INSERT INTO users ("username","email","password") VALUES ("${userName}", "${userEmail}", "${userPassword}")`)
+
+    let result = '';
+    try {
+        result = await db.query(`INSERT INTO users (username,email,password) VALUES ('${userName}', '${userEmail}', '${userPassword}')`);
+        console.log('Einpflegen von User erfolgreich!')
+    } catch (error) {
+        res.send('Fehler beim Einpflegen in die Datenbank: ' + error)
+    }
 })
 
 // Kannich die als Middleware benutzen? -Erster Gedanke war ja jedoch ist mein zweiter Gedanke nein, da ich die Funktion erst ausführen kann nachdem ich eine Abfrage geleistet habe. 

@@ -2,81 +2,129 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>Document</title>
+
+    <style>
+        html {
+            margin: 0;
+            padding: 0;
+            font-size: 16px;
+        }
+
+        body {
+            background: #7ddfa6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #ececec;
+            padding: 2rem 4rem;
+            border-radius: .5rem;
+            
+            input {
+                margin-bottom: .5rem;
+                border-radius: .25rem;
+                border: .1rem solid #7ddfa6;
+                background: #ececec;
+                padding: .5rem;
+            }
+            label {
+                color: #51926c;
+            }
+
+            button {
+                width: 100%;
+                border-radius: .25rem;
+                border: none;
+                background: #7ddfa6;
+                color: #303030;
+                padding: .5rem;
+                cursor: pointer;
+                &:hover {
+                    background-color:#51926c;
+                    color: #ececec;
+                }
+            }
+
+            a {
+                color: #51926c;
+                margin-top: 4rem;
+                text-decoration: none;
+            }
+        }
+        .headline {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: .5rem;
+            color: #51926c;
+        }
+
+        .invis {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-    <h1>register2</h1>
+    
 
-    <div>
-        <label for="userNameRegisterInput">Username</label>
-        <input type="text" name="userNameRegisterInput" data-register-username value="username">
-        <label for="passwordRegisterInput">Password</label>
-        <input type="text" name="passwordRegisterInput" data-register-password value="">
-        <label for="emailInput">Email</label>
-        <input type="text" name="emaiRegisterlInput" data-register-email value="">
-        <button type="submit" data-register-button >Register</button>
+    <div class="container">
+        <span class="headline">Register new user</span>
+        <label for="userNameRegisterInput" class="invis">Username</label>
+        <input type="text" name="userNameRegisterInput" data-register-username placeholder="username">
+        <label for="passwordRegisterInput" class="invis">Password</label>
+        <input type="text" name="passwordRegisterInput" data-register-password placeholder="password">
+        <label for="emailInput" class="invis">Email</label>
+        <input type="text" name="emaiRegisterlInput" data-register-email placeholder="email">
+        <button type="submit" data-register-button>Register</button>
+        <a href="/login">Login</a>
     </div>
 
     <script>
+        const newUserName = document.querySelector('[data-register-username]');
+        const newUserPassword = document.querySelector('[data-register-password]');
+        const newUserEmail = document.querySelector('[data-register-email]');
+        const registerButton = document.querySelector('[data-register-button]');
 
-    const newUserName = document.querySelector('[data-register-username]');
-    const newUserPassword = document.querySelector('[data-register-password]');
-    const newUserEmail = document.querySelector('[data-register-email]');
-    const registerButton = document.querySelector('[data-register-button]') 
+        registerButton.addEventListener('click', async () => {
+            const newUser = {
+                username: newUserName.value,
+                email: newUserEmail.value,
+                password: newUserPassword.value,
+            }
+            await submitNewUserData(newUser);
+            
+            newUserName.value = '';
+            newUserEmail.value = '';
+            newUserPassword.value = '';
+        })
 
-
-    registerButton.addEventListener('click', () => {
-        const newUser = {
-            username: newUserName.value,
-            email: newUserEmail.value,
-            password: newUserPassword.value,
+        const submitNewUserData = async (newUser) => {        
+            try {
+                const response = await fetch(`/register`, {
+                    method: 'POST',
+                    body: JSON.stringify({newUser}),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+            if (response.ok) {
+                // Daten Übermittlung erfolgreich, Aktualisierung der Anzeige oder Weiterleitung
+            } else {
+                console.error('Fehler beim Weiterleiten des Usernamen');
+            }
+            } catch (error) {
+                console.error('Fehler beim Weiterleiten des Usernamen', error);
+            }
         }
-        submitNewUserData(newUser)
-        //console.log(newUser)
-    })
-
-    const submitNewUserData = async (newUser) => {
-        console.log(newUser)
-        /* fetch(`/register`, {
-                method: 'POST',
-                body: JSON.stringify({ newUser }),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Fehler beim Senden der Daten');
-                }
-                //return response.json();
-                console.log(data)
-            })
-            .then(data => {
-                console.log('Antwort vom Server:', data);
-            })
-            .catch(error => {
-                console.error('Fehler:', error);
-            }); */
-
-        try {
-            const response = await fetch(`/register`, {
-                method: 'POST',
-                body: JSON.stringify(newUser),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-            console.log(response)
-        if (response.ok) {
-            // Daten Übermittlung erfolgreich, Aktualisierung der Anzeige oder Weiterleitung
-        } else {
-            console.error('Fehler beim Weiterleiten des Usernamen');
-        }
-        } catch (error) {
-            console.error('Fehler beim Weiterleiten des Usernamen', error);
-        }
-    }
     </script>
 </body>
 </html
