@@ -1,47 +1,45 @@
 const express = require('express');
 const app = express();
-const db = require('./dbConnection')
+const db = require('./dbConnection');
 
 
 app.set('view engine', 'ejs')
-app.use('/login', express.static(__dirname + '/public')); 
-app.use(express.urlencoded({ extended: false }))
+app.use(express.static('public')); 
+app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 let userData = {};
 
-app.post('/login', (req, res) => {
-    const userObj = req.body.userObj
-    console.log(JSON.stringify(userObj) + ' from post')
+
+app.get('/login', (req, res)=> {
+    res.sendFile(__dirname + '/public/index.html')
+})
+
+app.post('/login', async (req, res) => {
+    const userObj = req.body.userObj  
+    const query = "SELECT username FROM users WHERE email='" + userObj.email + "' AND password='" + userObj.password + "'"
+    console.log(query)
+    let result = '';
     
-    userData = userObj
-    // check ob email und pw in db sind und übereinstimmen und dann redirect nach userDashboard
-    res.redirect('/login')
+    try {
+        result = await db.query(query);
+        const users = result.rows 
+        console.log('Connection zur DB läuft')
+        console.log(users[0].username)
+        
+    } catch (error) {
+        res.json({message: 'TEST' })
+    }
+
+    res.redirect('/userDashboard');
 })
 
 app.get('/userDashboard', async (req, res) => {
-    const userObj = userData
-    console.log(userObj)
-    const userEmail = userObj.email
-    const userPassword = userObj.password
-
-    //get username from db where email & pw are equal to
-
-    console.log(userEmail)
-    console.log(userPassword)
-    let result = '';
-    try {
-        result = await db.query('SELECT * FROM users');
-        const users = result.rows 
-        console.log('Connection zur DB läuft')
-        res.render('userDashboard', { users })
-    } catch (error) {
-        res.send('Fehler in der Datenbank Connection ' + error)
-    }
-})
-
-app.get('/data', (req, res) => {
-    res.json( {message: 'Hello World'} );
+    //const userObj = userData 
+    const jsonData = {name: 'Timo'}
+    //res.json(dashboardData);
+    res.render('userDashboard', {jsonData})
+        
 })
 
 app.get('/register', (req,res)=> {
@@ -73,5 +71,4 @@ const capitalizeFirstLetter = (word) => {
     return joinArray
 }
 
-//app.set(express.static('index'))
 app.listen(3000)

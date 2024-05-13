@@ -32,11 +32,14 @@ loginButton.addEventListener('click', async () => {
                 'Content-Type': 'application/json'
             }
         });
-        console.log(response.body)
+        console.log(response)
         if (response.ok) {
             // Daten Übermittlung erfolgreich, Aktualisierung der Anzeige oder Weiterleitung
         } else {
             console.error('Fehler beim Weiterleiten des Usernamen');
+        }
+        if (response.redirected) {
+           window.location.href = response.url; // Weiterleitung zur Dashboard-Seite
         }
     } catch (error) {
         console.error('FFehler beim Weiterleiten des Usernamen', error);
