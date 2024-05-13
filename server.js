@@ -8,13 +8,27 @@ app.use('/login', express.static(__dirname + '/public'));
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
+let userData = {};
+
 app.post('/login', (req, res) => {
     const userObj = req.body.userObj
-    console.log(userObj)
+    console.log(JSON.stringify(userObj) + ' from post')
+    
+    userData = userObj
+    // check ob email und pw in db sind und übereinstimmen und dann redirect nach userDashboard
     res.redirect('/login')
 })
 
 app.get('/userDashboard', async (req, res) => {
+    const userObj = userData
+    console.log(userObj)
+    const userEmail = userObj.email
+    const userPassword = userObj.password
+
+    //get username from db where email & pw are equal to
+
+    console.log(userEmail)
+    console.log(userPassword)
     let result = '';
     try {
         result = await db.query('SELECT * FROM users');
@@ -38,11 +52,7 @@ app.post('/register', async (req,res) => {
     const userName = req.body.newUser.username;
     const userEmail = req.body.newUser.email;
     const userPassword = req.body.newUser.password;
-    console.log(userName)
-    console.log(userEmail)
-    console.log(userPassword)
-    console.log(`INSERT INTO users ("username","email","password") VALUES ("${userName}", "${userEmail}", "${userPassword}")`)
-
+   
     let result = '';
     try {
         result = await db.query(`INSERT INTO users (username,email,password) VALUES ('${userName}', '${userEmail}', '${userPassword}')`);

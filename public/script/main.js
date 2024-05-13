@@ -5,13 +5,12 @@ const password = document.querySelector('[data-password]')
 const email = document.querySelector('[data-email]')
 
 loginButton.addEventListener('click', async () => {
-    const usernameValue = username.value.trim();
+    
     const passwordValue = password.value.trim();
     const emailValue = email.value.trim();
-    console.log(usernameValue)
-    if (usernameValue === '') {
-        console.log('username unvalid')
-    }
+    console.log(passwordValue)
+    console.log(emailValue)
+    
     if (passwordValue === '') {
         console.log('password unvalid')
     }
@@ -21,7 +20,6 @@ loginButton.addEventListener('click', async () => {
     }
 
     const userObj = {
-        username: usernameValue,
         password: passwordValue,
         email: emailValue
     }

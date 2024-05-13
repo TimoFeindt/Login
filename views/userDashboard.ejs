@@ -4,11 +4,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <title>Document</title>
+
+    <style>
+        html {
+            margin: 0;
+            padding: 0;
+            font-size: 16px;
+        }
+
+        body {
+            background: #7ddfa6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #ececec;
+            padding: 2rem 4rem;
+            border-radius: .5rem;
+            
+            input {
+                margin-bottom: .5rem;
+                border-radius: .25rem;
+                border: .1rem solid #7ddfa6;
+                background: #ececec;
+                padding: .5rem;
+            }
+            label {
+                color: #51926c;
+            }
+
+            button {
+                width: 100%;
+                border-radius: .25rem;
+                border: none;
+                background: #7ddfa6;
+                color: #303030;
+                padding: .5rem;
+                cursor: pointer;
+                &:hover {
+                    background-color:#51926c;
+                    color: #ececec;
+                }
+            }
+
+            a {
+                color: #51926c;
+                margin-top: 4rem;
+                text-decoration: none;
+            }
+        }
+        .headline {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: .5rem;
+            color: #51926c;
+        }
+
+        .invis {
+            display: none;
+        }
+    </style>
 </head>
 <body>
     
-
-    <% const users =  locals.users %>
+    <div class="container">
+        <% const users =  locals.users %>
     <% users.forEach(user => { %>
         <% const userNameArray = Array.from(user.username) %>
         <% const arrayFirstLetter = userNameArray[0].toUpperCase() %>
@@ -18,6 +85,6 @@
         
         <h1>Hi <%= newFinalUserName %> this is your dashboard</h1>
     <% }); %>
-   
+    </div>
 </body>
 </html
