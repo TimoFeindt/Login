@@ -9,35 +9,33 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 let userData = {};
-
+let inputClass = {inputClass:''};
 
 app.get('/login', (req, res)=> {
-    res.sendFile(__dirname + '/public/index.html')
+    res.render('index', inputClass)
 })
 
-app.post('/login', async (req, res) => {
+app.post('/login', async (req, res, next) => {
     const userObj = req.body.userObj  
     const query = "SELECT username FROM users WHERE email='" + userObj.email + "' AND password='" + userObj.password + "'"
-    console.log(query)
+    //console.log(query)
     let result = '';
-    
     try {
         result = await db.query(query);
         const users = result.rows 
         console.log('Connection zur DB läuft')
-        console.log(users[0].username)
-        
+        userData = {name: users[0].username}
+        res.redirect('/userDashboard');
     } catch (error) {
-        res.json({message: 'TEST' })
+        console.log('error: ' + error)
+        inputClass.inputClass =  'wrongInput'
+        res.redirect('/login');
     }
-
-    res.redirect('/userDashboard');
 })
 
 app.get('/userDashboard', async (req, res) => {
-    //const userObj = userData 
-    const jsonData = {name: 'Timo'}
-    //res.json(dashboardData);
+    const jsonData = userData;
+    inputClass.inputClass = '';
     res.render('userDashboard', {jsonData})
         
 })

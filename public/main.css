@@ -22,13 +22,7 @@ body {
     padding: 2rem 4rem;
     border-radius: .5rem;
     
-    input {
-        margin-bottom: .5rem;
-        border-radius: .25rem;
-        border: .1rem solid #7ddfa6;
-        background: #ececec;
-        padding: .5rem;
-    }
+   
     label {
         color: #51926c;
     }
@@ -62,4 +56,15 @@ body {
 .invis {
     display: none;
 }
+.input {
+    margin-bottom: .5rem;
+    border-radius: .25rem;
+    border: .1rem solid #7ddfa6;
+    background: #ececec;
+    padding: .5rem;
+}
 
+.wrongInput {
+    border: 2px solid red;
+    color: red; 
+}

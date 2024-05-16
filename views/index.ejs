@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <link rel="stylesheet" href="/main.css">
+    <script src="/script/main.js" defer></script>
+    <title>Login</title>
+</head>
+
+<body>
+    
+
+    <div class="container">
+        <span class="headline">Login</span>
+        <label for="emailInput" class="invis">Email</label>
+        <input type="text" name="emailInput" data-email placeholder="Email" class="input <%= locals.inputClass %>">
+        <label for="passwordInput" class="invis">Password</label>
+        <input type="text" name="passwordInput" data-password placeholder="password" class="input <%= locals.inputClass %>">
+        <button type="submit" data-login >Login</button>
+        <a href="/register">Register</a>
+    </div>
+
+    <div class="invis">
+        <h1>Error Prompt</h1>
+        <p>please enter your valid informations</p>
+    </div>
+
+    
+
+</body>
+</html
